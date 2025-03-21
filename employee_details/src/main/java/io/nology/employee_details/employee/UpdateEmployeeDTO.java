@@ -2,78 +2,66 @@ package io.nology.employee_details.employee;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
-@Entity
-@Table(name = "employee")
-public class Employee {
-
-    public enum EmployeeStatus
-    {
-        PERMANENT,
-        CONTRACT
-    }
-
-    public enum WorkTypeBasis{
-        PART_TIME,
-        FULL_TIME
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
+public class UpdateEmployeeDTO {
+    
+      @NotBlank(message = "First name can't be empty")
     private String firstname;
 
-    @Column
     private String middlename;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Last name can't be empty")
     private String lastname;
 
-    @Column(nullable = false, unique = true)
+    @Email(message = "Invalid email format")
     private String email;
-  
-    @Column(nullable = false, unique = true)
+
+    @Pattern(regexp = "^(\\+\\d{1,3}[- ]?)?\\d{10}$", message = "Invalid mobile number format")
     private String mobile;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Residential address can't be empty")
     private String residentialAddress;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private EmployeeStatus employeeStatus;
+    @NotNull(message = "Employee status can't be empty")
+    private Employee.EmployeeStatus employeeStatus;
 
-     @Column(nullable = false)
+    @NotNull(message = "Start date can't be empty")
     private LocalDate startDate;
 
-    @Column
     private LocalDate finishDate;
 
-    @Column(nullable = false)
-    private boolean ongoing; 
+    private Boolean ongoing;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private WorkTypeBasis workTypeBasis;
+    @NotNull(message = "Work type basis can't be empty")
+    private Employee.WorkTypeBasis workTypeBasis;
 
-    @Column(nullable = false)
-    private int hoursPerWeek;
+    @NotNull(message = "Hours per week can't be empty")
+    @Min(value = 1, message = "Hours per week must be at least 1")
+    @Max(value = 40, message = "Hours per week cannot exceed 40")
+    private Integer hoursPerWeek;
 
-    public Employee() {
-    }
+    public UpdateEmployeeDTO() {}
 
-    public Employee(String firstname, String middlename, String lastname, String email, String mobile,
-            String residentialAddress, EmployeeStatus employeeStatus, LocalDate startDate, LocalDate finishDate,
-            boolean ongoing, WorkTypeBasis workTypeBasis, int hoursPerWeek) {
+    public UpdateEmployeeDTO(
+        String firstname,
+        String middlename,
+        String lastname,
+        String email,
+        String mobile,
+        String residentialAddress,
+        Employee.EmployeeStatus employeeStatus,
+        LocalDate startDate,
+        LocalDate finishDate,
+        Boolean ongoing,
+        Employee.WorkTypeBasis workTypeBasis,
+        Integer hoursPerWeek
+    ) {
         this.firstname = firstname;
         this.middlename = middlename;
         this.lastname = lastname;
@@ -136,11 +124,11 @@ public class Employee {
         this.residentialAddress = residentialAddress;
     }
 
-    public EmployeeStatus getEmployeeStatus() {
+    public Employee.EmployeeStatus getEmployeeStatus() {
         return employeeStatus;
     }
 
-    public void setEmployeeStatus(EmployeeStatus employeeStatus) {
+    public void setEmployeeStatus(Employee.EmployeeStatus employeeStatus) {
         this.employeeStatus = employeeStatus;
     }
 
@@ -160,35 +148,27 @@ public class Employee {
         this.finishDate = finishDate;
     }
 
-    public boolean isOngoing() {
+    public Boolean getOngoing() {
         return ongoing;
     }
 
-    public void setOngoing(boolean ongoing) {
+    public void setOngoing(Boolean ongoing) {
         this.ongoing = ongoing;
     }
 
-    public WorkTypeBasis getWorkTypeBasis() {
+    public Employee.WorkTypeBasis getWorkTypeBasis() {
         return workTypeBasis;
     }
 
-    public void setWorkTypeBasis(WorkTypeBasis workTypeBasis) {
+    public void setWorkTypeBasis(Employee.WorkTypeBasis workTypeBasis) {
         this.workTypeBasis = workTypeBasis;
     }
 
-    public int getHoursPerWeek() {
+    public Integer getHoursPerWeek() {
         return hoursPerWeek;
     }
 
-    public void setHoursPerWeek(int hoursPerWeek) {
+    public void setHoursPerWeek(Integer hoursPerWeek) {
         this.hoursPerWeek = hoursPerWeek;
     }
-
-    public Long getId() {
-        return id;
-    }
-    
-    
-    
-
 }
