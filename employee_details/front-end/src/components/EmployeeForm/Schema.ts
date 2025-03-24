@@ -11,7 +11,6 @@ export const workTypeBasis = [
     'FULL_TIME'
 ] as const
 
-// genre:z.enum(genres),
 export const schema = z.object({
   firstname: z.string().min(1, "First name is required"),
   middlename: z.string().optional(),

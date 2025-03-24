@@ -46,13 +46,25 @@ export const createEmployee = async (data: EmployeeFormData) => {
     throw error;
   }
 };
-export const editEmployee = async (id: number, data: EmployeeFormData) => {
+
+export const getEmployeeById = async (id: number): Promise<Employee> => {
+  try {
+    const response = await axios.get(`http://localhost:8080/employee/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching employee with ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const updateEmployee = async (id: number, data: EmployeeFormData) => {
   try {
     const response = await axios.put(`http://localhost:8080/employee/${id}`, data, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
+     console.log("submitteed ..." , response.data)
     return response.data;
   } catch (error) {
     console.error(`Error updating employee with ID ${id}:`, error);

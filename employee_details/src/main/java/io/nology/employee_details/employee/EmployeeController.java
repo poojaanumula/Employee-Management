@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,14 +65,8 @@ public ResponseEntity<Void> deleteByBookId(@PathVariable Long id) throws NotFoun
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 }
     
-// @PatchMapping("/{id}")
-// public ResponseEntity<Book> updateBookById(@PathVariable Long id, @Valid @RequestBody UpdateBookDTO data) throws NotFoundException
-// {
-//  Optional<Book> result=this.bookService.updateBookById(id,data);
-//  Book foundBook = result.orElseThrow(()->new NotFoundException("could not update book with id" +id));
-//  return new ResponseEntity<Book>(foundBook, HttpStatus.OK);
-// }
-@PatchMapping("/{id}")
+//@PutMapping("/{id}")
+@PutMapping("/{id}")
 public ResponseEntity<Employee> updateEmployeeById(@PathVariable Long id, @Valid @RequestBody UpdateEmployeeDTO data) throws NotFoundExceptions
 {
 Optional<Employee> result = this.employeeService.updateEmployeeById(id, data);
