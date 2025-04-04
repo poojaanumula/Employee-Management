@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Pattern;
 
 public class UpdateEmployeeDTO {
     
-      @NotBlank(message = "First name can't be empty")
+    @NotBlank(message = "First name can't be empty")
     private String firstname;
 
     private String middlename;

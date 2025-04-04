@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.nology.employee_details.common.exceptions.ConflictExceptions;
 import io.nology.employee_details.common.exceptions.NotFoundExceptions;
 import jakarta.validation.Valid;
 
@@ -25,7 +26,6 @@ public class EmployeeController {
 
 private EmployeeService employeeService;
 
-
 public EmployeeController(EmployeeService employeeService) 
 {
     this.employeeService = employeeService;
@@ -33,7 +33,7 @@ public EmployeeController(EmployeeService employeeService)
 
 
 @PostMapping
-public ResponseEntity<Employee> postEmployee(@Valid @RequestBody CreateEmployeeDTO data)
+public ResponseEntity<Employee> postEmployee(@Valid @RequestBody CreateEmployeeDTO data) throws NotFoundExceptions, ConflictExceptions
 {
           Employee newEmployee =  this.employeeService.createEmployee(data);  
           return new ResponseEntity<Employee>(newEmployee, HttpStatus.CREATED);
@@ -67,7 +67,7 @@ public ResponseEntity<Void> deleteByBookId(@PathVariable Long id) throws NotFoun
     
 //@PutMapping("/{id}")
 @PutMapping("/{id}")
-public ResponseEntity<Employee> updateEmployeeById(@PathVariable Long id, @Valid @RequestBody UpdateEmployeeDTO data) throws NotFoundExceptions
+public ResponseEntity<Employee> updateEmployeeById(@PathVariable Long id, @Valid @RequestBody UpdateEmployeeDTO data) throws NotFoundExceptions, ConflictExceptions
 {
 Optional<Employee> result = this.employeeService.updateEmployeeById(id, data);
 Employee foundEmployee = result.orElseThrow(()-> new NotFoundExceptions("Could not update employee with id " +id));

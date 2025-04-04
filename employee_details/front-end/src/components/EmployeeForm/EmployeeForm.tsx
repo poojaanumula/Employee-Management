@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 interface EmployeeFormProps {
   onSubmit: (data: EmployeeFormData) => unknown;
-  initialData?: EmployeeFormData; // Optional data for editing
+  initialData?: EmployeeFormData;
 }
 
 const EmployeeForm = ({ onSubmit, initialData }: EmployeeFormProps) => {
@@ -17,20 +17,18 @@ const EmployeeForm = ({ onSubmit, initialData }: EmployeeFormProps) => {
     reset,
   } = useForm<EmployeeFormData>({
     resolver: zodResolver(schema),
-    defaultValues: initialData, // Pre-fill with initialData if provided
+    defaultValues: initialData,
   });
 
-  // When initialData changes, reset the form
   useEffect(() => {
     if (initialData) {
       reset(initialData);
     }
   }, [initialData, reset]);
-
   return (
     <div className={Classes.form}>
       <h3 className={Classes.title}>
-        {initialData ? "Edit Employee" : "Add an Employee"}
+        {initialData ? "Update Employee Details" : "Add an Employee"}
       </h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={Classes.row}>
@@ -142,8 +140,8 @@ const EmployeeForm = ({ onSubmit, initialData }: EmployeeFormProps) => {
         </div>
 
         <div className={Classes.row}>
-          <p>Employee Status</p>
-          <hr />
+          <p className={Classes.status}>Employee Status</p>
+          <hr className={Classes.border} />
           <label>What is the contract type?</label>
           <div className={Classes.styleradio}>
             <label>
@@ -207,16 +205,15 @@ const EmployeeForm = ({ onSubmit, initialData }: EmployeeFormProps) => {
           </div>
         </div>
 
-        <div className={Classes.row}>
-          <label htmlFor="ongoing">
-            <input
-              id="ongoing"
-              type="checkbox"
-              {...register("ongoing")}
-              defaultChecked={initialData?.ongoing}
-            />
-            Ongoing
-          </label>
+        <div className={Classes.checkbox}>
+          <label>Ongoing</label>
+          <input
+            id="ongoing"
+            type="checkbox"
+            {...register("ongoing")}
+            className={Classes.ongoing}
+            defaultChecked={initialData?.ongoing}
+          />
         </div>
 
         <div className={Classes.row}>

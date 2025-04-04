@@ -1,0 +1,45 @@
+.title{
+    background-color:#5465ff;
+    width: 100%;
+    color:white;
+    padding: 20px;
+    font-size: 35px;
+    font-family:cursive;
+    text-align: center;
+}
+
+.addemployee{
+    background-color:#E2FDFF;
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    margin-left: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    cursor: pointer;
+    font-weight: 600;
+    border:2px solid blue;
+    &:hover{
+        background-color: #5465ff;
+        transition: 2s;
+    }
+}
+.main{
+    background-color: #BFD7FF;
+    padding: 20px;
+}
+.subTitle{
+    padding:10px;
+    font-size: 20px;
+    text-align: center;
+    font-family: cursive;
+}
+.btn{
+    margin-top:20px;
+    text-decoration: none;
+    &:hover{
+        color:white;
+    }
+   
+}

@@ -3,45 +3,41 @@ package io.nology.employee_details.employee;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import io.nology.employee_details.common.exceptions.ConflictExceptions;
+import io.nology.employee_details.common.exceptions.NotFoundExceptions;
 import jakarta.validation.Valid;
 @Service
 public class EmployeeService {
 
-    private EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;   
+    private ModelMapper mapper;
+    
+    
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, ModelMapper mapper) {
         this.employeeRepository = employeeRepository;
+        this.mapper = mapper;
     }
 
-
-    public Employee createEmployee(CreateEmployeeDTO data) {
+    public Employee createEmployee(CreateEmployeeDTO data) throws NotFoundExceptions, ConflictExceptions {
+        if (employeeRepository.existsByEmail(data.getEmail())) {
+            throw new ConflictExceptions("Email already exists.");
+        }
 
         if (data.getOngoing() && data.getFinishDate() != null) {
-            throw new IllegalArgumentException("Finish date must be empty if the employee is ongoing.");
+            throw new NotFoundExceptions("Finish date must be empty if the employee is ongoing.");
         }
         if (!data.getOngoing() && data.getFinishDate() == null) {
-            throw new IllegalArgumentException("Finish date is required for employees who are not ongoing.");
+            throw new NotFoundExceptions("Finish date is required for employees who are not ongoing.");
         }
+    
 
-
+        Employee newEmployee = mapper.map(data, Employee.class);
+        return this.employeeRepository.save(newEmployee);
         
-        Employee employee = new Employee();
-        employee.setFirstname(data.getFirstname());
-        employee.setMiddlename(data.getMiddlename());
-        employee.setLastname(data.getLastname());
-        employee.setEmail(data.getEmail());
-        employee.setMobile(data.getMobile());
-        employee.setResidentialAddress(data.getResidentialAddress());
-        employee.setEmployeeStatus(data.getEmployeeStatus());
-        employee.setStartDate(data.getStartDate());
-        employee.setFinishDate(data.getFinishDate());
-        employee.setOngoing(data.getOngoing());
-        employee.setWorkTypeBasis(data.getWorkTypeBasis());
-        employee.setHoursPerWeek(data.getHoursPerWeek());
-
-        return employeeRepository.save(employee);
     }
 
 
@@ -65,49 +61,22 @@ public class EmployeeService {
         return true;
     }
 
-    public Optional<Employee> updateEmployeeById(Long id, UpdateEmployeeDTO data) {
+    public Optional<Employee> updateEmployeeById(Long id, UpdateEmployeeDTO data) throws NotFoundExceptions, ConflictExceptions
+    {
         Optional<Employee> result = this.getEmployeeById(id);
         if(result.isEmpty())
         {
             return result;
         }
         Employee foundEmployee = result.get();
-        if (data.getFirstname() != null) {
-            foundEmployee.setFirstname(data.getFirstname().trim());
+
+        if (data.getOngoing() && data.getFinishDate() != null) {
+            throw new NotFoundExceptions("Finish date must be empty if the employee is ongoing.");
         }
-        if (data.getMiddlename() != null) {
-            foundEmployee.setMiddlename(data.getMiddlename().trim());
+        if (!data.getOngoing() && data.getFinishDate() == null) {
+            throw new NotFoundExceptions("Finish date is required for employees who are not ongoing.");
         }
-        if (data.getLastname() != null) {
-            foundEmployee.setLastname(data.getLastname().trim());
-        }
-        if (data.getEmail() != null) {
-            foundEmployee.setEmail(data.getEmail().trim());
-        }
-        if (data.getMobile() != null) {
-            foundEmployee.setMobile(data.getMobile().trim());
-        }
-        if (data.getResidentialAddress() != null) {
-            foundEmployee.setResidentialAddress(data.getResidentialAddress().trim());
-        }
-        if (data.getEmployeeStatus() != null) {
-            foundEmployee.setEmployeeStatus(data.getEmployeeStatus());
-        }
-        if (data.getStartDate() != null) {
-            foundEmployee.setStartDate(data.getStartDate());
-        }
-        if (data.getFinishDate() != null) {
-            foundEmployee.setFinishDate(data.getFinishDate());
-        }
-        if (data.getOngoing() != null) {
-            foundEmployee.setOngoing(data.getOngoing());
-        }
-        if (data.getWorkTypeBasis() != null) {
-            foundEmployee.setWorkTypeBasis(data.getWorkTypeBasis());
-        }
-        if (data.getHoursPerWeek() != null) {
-            foundEmployee.setHoursPerWeek(data.getHoursPerWeek());
-        }
+        mapper.map(data, foundEmployee);
         this.employeeRepository.save(foundEmployee);
         return Optional.of(foundEmployee);
     }

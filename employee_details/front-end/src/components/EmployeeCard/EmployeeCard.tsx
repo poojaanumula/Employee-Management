@@ -9,19 +9,28 @@ interface EmployeeCardProps {
 
 const EmployeeCard = ({ employee, onDelete }: EmployeeCardProps) => {
   return (
-    <div className={Classes.section}>
-      <div>
-        <h3>{employee.firstname}</h3>
-        <p>{employee.email}</p>
-        <p>{employee.employeeStatus}</p>
+    <>
+      <div className={Classes.section}>
+        <div className={Classes.details}>
+          <h3 className={Classes.name}>{employee.firstname}</h3>
+          <div className={Classes.email}>
+            <p className={Classes.emailId}>{employee.email}</p>
+            <div className={Classes.line}></div>
+            <p>{employee.employeeStatus}</p>
+          </div>
+        </div>
+
+        <div className={Classes.buttons}>
+          <Link to={`/employee/edit/${employee.id}`} className={Classes.text}>
+            Edit
+          </Link>
+          <button className={Classes.btn} onClick={() => onDelete(employee.id)}>
+            Delete
+          </button>
+        </div>
       </div>
-      <div className={Classes.buttons}>
-        <Link to={`/employee/edit/${employee.id}`}>Edit Employee</Link>
-        <button className={Classes.btn} onClick={() => onDelete(employee.id)}>
-          Delete
-        </button>
-      </div>
-    </div>
+      <hr></hr>
+    </>
   );
 };
 

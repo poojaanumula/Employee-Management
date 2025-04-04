@@ -1,44 +1,92 @@
-
 .form {
     width: 800px;
-    margin-top: 20%;
+    margin-top: 34%;
     position: absolute;
     top: 60%;
     left: 50%;
-    color:black;
-    background-color: lightblue;
+    color: black;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #9BB1FF;
     padding: 30px;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
 }
-form{
+
+form {
     margin-top: 20px;
 }
-.row{
-    padding:10px;
+
+.row {
+    padding: 10px;
 }
-.title{
-     font-size: 30px;
-     padding: 5px;
+
+.title {
+    font-size: 30px;
+    padding: 5px;
 }
-.styleRows{
-   display: flex;
-   padding: 10px;
-}
-.btn{
- display: block;
- margin-left: 10px;   
- color:black;
-}
-.styleradio{
+
+.styleRows {
     display: flex;
-   padding: 10px;
-   gap:20px;
+    flex-direction: column; /* Stack label and input vertically */
+    gap: 10px;
+    padding: 10px;
 }
-p{
+
+input {
+    width: 100%; /* Make the input fields take full width */
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #5465FF;
+    border-radius: 4px;
+    background-color: #E2FDFF;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.btn {
+    display: block;
+    margin-left: 10px;
+    color:white;
+    padding: 10px;
+    background-color: #5465FF;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.styleradio {
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+}
+
+p {
     font-weight: bold;
     margin-bottom: 10px;
 }
-.input{
-    width:300px;
-    margin-left: 10px;
+
+h3 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.checkbox {
+ 
+    display: flex;
+    align-items: center; /* Align checkbox and label */
+    gap: 10px; /* Add spacing between checkbox and label */
+    padding: 10px;
+}
+
+.checkbox label {
+    margin: 0; /* Remove any default margin for label */
+}
+
+.ongoing {
+    border: 4px solid black;
+    width: auto; /* Ensure it doesn't stretch too far */
+}
+.border{
+    margin-bottom: 10px;
 }

@@ -41,11 +41,14 @@ export const createEmployee = async (data: EmployeeFormData) => {
       },
     });
     return response.data as Employee;
-  } catch (error) {
-    console.error('Error posting employee:', error);
-    throw error;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data || "Something went wrong!");
+    }
+    throw new Error("Something went wrong!");
   }
 };
+
 
 export const getEmployeeById = async (id: number): Promise<Employee> => {
   try {
@@ -66,8 +69,11 @@ export const updateEmployee = async (id: number, data: EmployeeFormData) => {
     });
      console.log("submitteed ..." , response.data)
     return response.data;
-  } catch (error) {
+  } catch (error:any) {
+    if (error.response) {
+         throw new Error(error.response.data || "Something went wrong!");
+         }
     console.error(`Error updating employee with ID ${id}:`, error);
-    throw error;
+    throw new Error("Could not update employee");
   }
 };
