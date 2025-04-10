@@ -6,6 +6,7 @@ import EmployeeList from './pages/EmployeeList/EmployeeList'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ViewEmployee from './pages/ViewEmployee/ViewEmployee';
 function App() {
   return (
     <>
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<EmployeeList/>} />
           <Route path="/employee/addemployee" element={<AddEmployee />} />
           <Route path="/employee/edit/:id" element={<EditEmployee />} />
+          <Route path="/viewEmployee/:id" element={<ViewEmployee />} />
         </Routes>
      </BrowserRouter>
     </>

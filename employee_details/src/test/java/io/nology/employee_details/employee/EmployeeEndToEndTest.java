@@ -3,6 +3,7 @@ package io.nology.employee_details.employee;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,8 @@ import org.springframework.test.context.ActiveProfiles;
 import io.nology.employee_details.employee.Employee.EmployeeStatus;
 import io.nology.employee_details.employee.Employee.WorkTypeBasis;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -63,7 +66,8 @@ public class EmployeeEndToEndTest {
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("$", hasSize(1))
-                .body("firstname", hasItems("Samantha"));
+                .body("firstname", hasItems("Samantha"))
+                .body(matchesJsonSchemaInClasspath("schemas/employee-array-schema.json"));
 
     }
     @Test
@@ -90,7 +94,7 @@ public class EmployeeEndToEndTest {
         .statusCode(HttpStatus.OK.value())
         .body("firstname", equalTo("Samantha"))
         .body("lastname", equalTo("Prabhu"))
-        .body(matchesJsonSchemaInClasspath("/schemas/employee-schema.json"));
+        .body(matchesJsonSchemaInClasspath("schemas/employee-schema.json"));
     }
 
     @Test
@@ -102,16 +106,83 @@ public class EmployeeEndToEndTest {
         .then()
         .statusCode(HttpStatus.BAD_REQUEST.value());
     }
-
     @Test
     public void getById_IDNotInDb_NotFound()
     {
         given()
         .when()
-        .get("/employee/9999999999")
+        .get("/employee/99999999999999999")
         .then()
         .statusCode(HttpStatus.NOT_FOUND.value());
     }
+    
+    @Test
+    public void createEmployee_whenPassedPlainText_415()
+    {
+        given()
+        .contentType(ContentType.TEXT)
+        .body("Hello")
+        .when()
+        .post("/employee")
+        .then()
+        .statusCode(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value());
+    }
+
+  
+    @Test
+    public void createEmployee_whenPassedEmptyBody_BadRequest()
+    {
+        given()
+        .contentType(ContentType.JSON)
+        .when()
+        .post("/employee")
+        .then()
+        .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void createEmployee_whenPassedBadData_BadRequest()
+    {
+        HashMap<String, String>  data = new HashMap<>();
+        data.put("firstName", "Neha");
+        given()
+        .contentType(ContentType.JSON).body(data)
+        .when()
+        .post("/employee")
+        .then()
+        .statusCode(HttpStatus.BAD_REQUEST.value());
+
+    }
+
+    @Test
+public void createEmployee_whenPassedValidData_Created() {
+    HashMap<String, Object> data = new HashMap<>();
+    data.put("firstname", "Lena");
+    data.put("middlename", "Marie"); 
+    data.put("lastname", "Smith");
+    data.put("email", "lena.smith@example.com");
+    data.put("mobile", "0412345678");
+    data.put("residentialAddress", "123 Sydney Street, NSW");
+    data.put("employeeStatus", "PERMANENT");
+    data.put("startDate", "2024-04-01"); 
+    data.put("finishDate", "2024-12-31"); 
+    data.put("ongoing", false);
+    data.put("workTypeBasis", "FULL_TIME"); 
+    data.put("hoursPerWeek", 38); 
+
+    given()
+        .contentType(ContentType.JSON)
+        .body(data)
+    .when()
+        .post("/employee")
+    .then()
+        .statusCode(HttpStatus.CREATED.value())
+        .body(matchesJsonSchemaInClasspath("schemas/employee-schema.json"));
+}
+
+
+   
+
 }
 
 

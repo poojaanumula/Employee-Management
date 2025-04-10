@@ -19,6 +19,7 @@
         "workTypeBasis": { "type": "string", "enum": ["PART_TIME", "FULL_TIME"] },
         "hoursPerWeek": { "type": "integer", "minimum": 0 }
     },
-    "required": ["firstname","lastname","email","mobile","residentialAddress","employeeStatus",
+    "required": [
+        "firstname","lastname","email","mobile","residentialAddress","employeeStatus",
 "startDate","finishDate","ongoing","workTypeBasis","hoursPerWeek"]
 }

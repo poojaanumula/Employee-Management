@@ -14,8 +14,7 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;   
     private ModelMapper mapper;
-    
-    
+
 
     public EmployeeService(EmployeeRepository employeeRepository, ModelMapper mapper) {
         this.employeeRepository = employeeRepository;
@@ -33,7 +32,6 @@ public class EmployeeService {
         if (!data.getOngoing() && data.getFinishDate() == null) {
             throw new NotFoundExceptions("Finish date is required for employees who are not ongoing.");
         }
-    
 
         Employee newEmployee = mapper.map(data, Employee.class);
         return this.employeeRepository.save(newEmployee);

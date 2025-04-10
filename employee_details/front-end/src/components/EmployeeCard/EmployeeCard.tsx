@@ -27,6 +27,9 @@ const EmployeeCard = ({ employee, onDelete }: EmployeeCardProps) => {
           <button className={Classes.btn} onClick={() => onDelete(employee.id)}>
             Delete
           </button>
+          <Link to={`/viewEmployee/${employee.id}`} className={Classes.view} >
+           View More
+          </Link>
         </div>
       </div>
       <hr></hr>
