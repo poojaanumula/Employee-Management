@@ -22,21 +22,30 @@
 src > main > java >io>nology>employee_details>EmployeeDetailsApplications.java <br>
 open the file and click on run. <br>
 In the browser open http://localhost:5173/<br>
-
 </p>
 <h2>Features
 </h2>
 <p>View a list of all employees
-Add a new employee
-Edit employee details
-Delete an employee
-View complete employee profile
-Filter employees by employment type (Permanent or Contract)
-Form validation using React Hook Form and Zod
-End-to-end integration testing with H2 database</p>
+  <ul>
+    <li>Add a new employee</li>
+    <li>Edit employee details</li>
+     <li>Delete an employee</li>
+     <li>View complete employee profile</li>
+     <li>Filter employees by employment type (Permanent or Contract)</li>
+     <li>Form validation using React Hook Form and Zod</li>
+     <li>End-to-end integration testing with H2 database</li>
+  </ul>
 <h2>Tech Stack</h2>
-<p>Frontend: React (with Vite)
-Backend: Java Spring Boot
-Database: MySQL (with H2 for testing)
-Testing: End-to-End tests using H2 in-memory database
+<p>
+  <ul>
+    <li>Frontend: React (with Vite)</li>
+      <li>Backend: Java Spring Boot</li>
+      <li>Database: MySQL (with H2 for testing)</li>
+      <li>Testing: End-to-End tests using H2 in-memory database</li>
+  </ul>
+
+  
+
+
+
 </p>
