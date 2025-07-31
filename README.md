@@ -4,15 +4,20 @@
   It allows users to Create, Read, Update, and Delete employee records. 
   The application also supports filtering employees based on their employment type (Permanent or Contract).
 </p>
-<h2>Demo & Snippets</h2>
 <h2>Build Steps</h2>
 <p>
-  git clone 
-  cd employee_details
-  Go to the front-end folder: 
-  cd front-end
-  npm run dev
+  git clone https://github.com/poojaanumula/Employee-Management.git
+  <br>
+  
+  cd employee-management
+  <br>
+  right click on front-end folder to open terminal and type
+    <br>
   npm install
+    <br>
+  npm run dev
+    <br>
+
 </p>
 <h2>Features
 </h2>
